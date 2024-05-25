@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <header>
+        <div class="head">
+            <div>
+                <img src="/talkroom-logo-transparent.png" class="logo" alt="Logo">
+            </div>
+            <div>
+                <span>Freely Say You What Ever You Want</span>
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="prompt-box">
+            <div class="discord-icon">
+                <img src="/talkroom-logo-transparent.png" class="logo" alt="Logo">
+            </div>
+            <div class="prompt-message">
+                <h2>Welcome</h2>
+                <p>You have the freedom to discuss any topic except <b style="color:brown">for using explicit language or discussing topics that are legally prohibited.</b></p>
+                <div class="status">
+                    <span class="status-online">Enter Cool Name</span>
+                    <input type="text" id="user-name-input" maxlength="50" required>
+                </div>
+            </div>
+            <button class="accept-button">Accept Invite</button>
+        </div>
+    
+        <div class="chat-section-div">
+            <div class="chats" loading="lazy-loading">
+                
+            </div>
+        </div>
+        <div class="form-section">
+            <form class="form-area">
+                <div>
+                    <input type="text" class="user-input form-item" placeholder="time to talk..." required />
+                    <button id="submit-btn" class="submit-btn"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHiSURBVHgBxZVPUsIwFMa/FGYAVxyhnkBcwbgRb6AbFTdyBDwB4QTiCcQFOONKb4AbB91YTyA3sCtFR4gvSdM/ChbGdHwzLS+kfb98ee+lANnWFa/ULrmLjI0piMCzHqFH986owcfIwBxnhnI4EmhKMC3gPAulTN6qff7CWAwazfZgUamjYjrwArJPPxfhrGWlGjbDk46NcrGEFlHXs4AqGAUfmj9eP1CX2zY64k3bUAUrvEew3BR149uGMuPUBlyWvytVEmRn3sNBm3Byj79F6WGJQnJi/q16T6Cy6OG/Kg2VVQe8RYNTtYI8Nu/2uYcUW1VpqCwnoryJzyhvv9mqSln8ZdPcQsCn3vPTcaw3arQ7ZrRIqXDQvT/kJ/GcSZljFUKeJgJu2iWE2J2rVKCTWNKMepcsn1gB08VBcj3yU3PmCNzEx7W+2tI2ZFWbmLRLDtPwfGwL6vIIkTbNofNwwK+xpC2C0KLPSmvoDve4n4DRZMUkMM/0dtqCGAthlK9tKUwexmllvyrkB4xAupmZbm6bkAQsKFk3oA5tQxIweUQJEyRWhbYgCRipqZv2Lhbh2YYkYNThGzJpsjgmb3gkx7UJScCUMugvNfRlFRLC4s2cFSSEFSfwJgWMCVLOCvIv9gV96TMYnLAEUwAAAABJRU5ErkJggg==" class="send-btn-icon"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="app.js" type="module" ></script>
+</body>
+</html>
