@@ -30,12 +30,12 @@ html, body {
 
 .prompt-message h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 27px;
 }
 
 .prompt-message p {
     margin: 10px 0;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .status {
@@ -64,7 +64,7 @@ html, body {
     font-size: 17px;
     max-width: 800px;
     width: 80%;
-    font-family: 'Arial Narrow Bold', sans-serif;
+    font-family: 'Anonymous Pro', serif;
     &:focus {
         background: #141414;
         border: 1px solid brown;

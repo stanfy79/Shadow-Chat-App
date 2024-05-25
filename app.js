@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push, onChildAdded } from 'firebase/database';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // Firebase configuration
 const appSettings = {
@@ -81,3 +82,4 @@ function listenForNewMessages() {
 }
 
 listenForNewMessages();
+<SpeedInsights/>
