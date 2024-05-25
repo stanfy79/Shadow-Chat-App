@@ -68,7 +68,7 @@ function listenForNewMessages() {
             newSpeechBubbleName.classList.add(
                 'userName',
                 `speech-by-${message.user === userNameInput.value ? 'user' : 'other'}`
-            );
+            ); 
         
         chatbotConversation.appendChild(newSpeechBubbleContainer);
         }
