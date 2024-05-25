@@ -26,7 +26,6 @@ acceptButton.addEventListener('click', () => {
     const userName = userNameInput.value;
     promptBox.style.display = "none";
     push(conversationInDb, {
-        userId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
         newUsers: `${userName} joins chat`,
         type: 'join'
     });
@@ -75,6 +74,7 @@ function listenForNewMessages() {
         }
         newSpeechBubbleName.textContent = message.user;
         newSpeechBubble.textContent = message.content;
+        newSpeechBubble.setAttribute('data-user-id', message.userId)
         newlyJoinedUserText.textContent = message.newUsers
         chatbotConversation.scrollTop = chatbotConversation.scrollHeight;
     });
