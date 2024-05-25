@@ -82,4 +82,3 @@ function listenForNewMessages() {
 }
 
 listenForNewMessages();
-<SpeedInsights/>
