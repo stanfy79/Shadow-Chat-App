@@ -285,7 +285,7 @@ html, body {
             cursor: pointer;
             padding: 10px 0 0 10px;
         }
-        #file-upload {
+        .hidden-input {
             display: none;
         }
         input[type="text"], button{
