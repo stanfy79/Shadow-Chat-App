@@ -11,7 +11,7 @@ html, body {
 }
 .prompt-box {
     background: #00000071;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     padding: 20px;
     z-index: 2;
     position: fixed;
@@ -75,7 +75,7 @@ html, body {
 .accept-button {
     background-color: #7289da;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     color: #ffffff;
     padding: 10px 20px;
     font-size: 16px;
@@ -132,8 +132,8 @@ html, body {
 }
 
 .chat-section-div {
-    max-height: 85%;
-    height: 85%;
+    max-height: 88%;
+    height: 88%;
     display: flex;
     justify-content: center;
     .chats {
@@ -195,6 +195,9 @@ html, body {
         width: 84%;
         min-width: 20px;
     }
+    &:hover .reply-icon {
+        opacity: 1;
+    }
 }
 .newlyjoined {
     width: 100%;
@@ -210,33 +213,94 @@ html, body {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 }
+.reply-icon {
+    transition: opacity .3s ease-in;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 10px;
+    right: 5%;
+    top: 20%;
+    &:hover {
+        background: #ffffff18;
+    }
+}
+.new-image-sent {
+    max-width: 75%;
+    max-height: 1000px;
+    object-fit: cover;
+    object-position: 0%;
+    margin-top: 2em;
+    border-radius: 20px;
+}
+.image-preview-container {
+    bottom: 13%;
+    z-index: 2;
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    display: none;
+    border-radius: 10px;
+    img:first-of-type {
+        position: absolute;
+        top: 0%;
+        right: -45%;
+    }
+    img:nth-child(2) {
+        position: absolute;
+        bottom: 0%;
+        right: -45%;
+    }
+    #imagePreview {
+        width: 100%;
+        height: 100%;
+        color: #00da9c;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+    }
+}
 .form-section {
     width: 100%;
-    height: 10%;
+    height:10%;
     display: flex;
-    margin-top: 10px;
     justify-content: center;
     align-items: center;
     color: white;
     .form-area {
         width: 100%;
         max-width: 1000px;
+        top: 10px;
         height: 100%;
-        border-radius:20px;
         position: relative;
         display: flex;
         justify-content: center;
         flex-flow: column nowrap;
+        .image-file-label {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            padding: 10px 0 0 10px;
+        }
+        #file-upload {
+            display: none;
+        }
         input[type="text"], button{
             background-color: transparent;
             border: none;
-            height: 100;
             padding: 1em;
+            margin: auto;
             color: #fcfcfc;
         }
         
         input[type="text"] {
-            width: 90%;
+            width: 78%;
+            height: 100%;
+            word-break: wrap;
+            word-wrap: break-word;
             font-size: 95%;
             font-family: 'Anonymous Pro', monospace;
             outline: none;
@@ -247,16 +311,20 @@ html, body {
         }
         #submit-btn {
             position: absolute;
-            right: 10px;
+            right: 0px;
         }
     }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 600px) {
     .speech {
         max-width: 600px;
     }
     .logo {
         width: 80px;
+    }
+    .new-image-sent {
+        max-width: 400px;
+        max-height: 600px;
     }
 }
