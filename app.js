@@ -42,7 +42,7 @@ document.addEventListener('submit', (e) => {
     push(conversationInDb, {
         user: userNameInput.value,
         content: userInput.value,
-        timestamp: Date.now(),
+        timestamp: "Time",
         messageId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
         type: 'message'
     });
