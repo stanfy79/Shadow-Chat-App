@@ -25,6 +25,8 @@ const promptBox = document.querySelector(".prompt-box");
 const userNameInput = document.querySelector("#user-name-input");
 const acceptButton = document.querySelector(".accept-button");
 const fileInput = document.getElementById('file-upload');
+const replyIcon = document.createElement("img");
+replyIcon.setAttribute("src", "reply-all-svgrepo-com.svg")
 
 acceptButton.addEventListener('click', () => {
     const userName = userNameInput.value;
@@ -53,8 +55,8 @@ document.addEventListener('submit', (e) => {
 function listenForNewMessages() {
     onChildAdded(conversationInDb, (snapshot) => {
         const message = snapshot.val();
-        const replyIcon = document.createElement("img");
-        replyIcon.setAttribute("src", "reply-all-svgrepo-com.svg")
+        
+        
         replyIcon.classList.add("reply-icon")
 
         if (message.type === 'join') {
