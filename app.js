@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push, onChildAdded } from 'firebase/database';
+import { getDatabase, ref, push, onChildAdded, update } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // Firebase configuration
@@ -42,7 +42,8 @@ document.addEventListener('submit', (e) => {
     push(conversationInDb, {
         user: userNameInput.value,
         content: userInput.value,
-        blockId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
+        timestamp: Date.now(),
+        messageId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
         type: 'message'
     });
     userInput.value = '';
@@ -54,8 +55,14 @@ function listenForNewMessages() {
     onChildAdded(conversationInDb, (snapshot) => {
         const message = snapshot.val();
         const replyIcon = document.createElement("img");
+        const deleteMessage = document.createElement("img");
+        deleteMessage.setAttribute("src", "delete-svgrepo-com.svg")
         replyIcon.setAttribute("src", "reply-all-svgrepo-com.svg")
+        deleteMessage.classList.add("delete-meassage")
         replyIcon.classList.add("reply-icon")
+        replyIcon.addEventListener('click', () => {
+            showReplyInput(message.messageId);
+        });
 
         if (message.type === 'join') {
             const newlyJoinedUser = document.createElement("div");
@@ -79,11 +86,15 @@ function listenForNewMessages() {
             newImageContainer.appendChild(newImageName);
             newImageContainer.appendChild(newImageSent);
             newImageContainer.appendChild(replyIcon)
+            newImageContainer.appendChild(deleteMessage)
             chatbotConversation.appendChild(newImageContainer);
         } else {
             const newSpeechBubbleContainer = document.createElement('div');
             const newSpeechBubbleName = document.createElement('span');
             const newSpeechBubble = document.createElement('div');
+            const newSpeechBubbleTime = document.createElement('span');
+
+            newSpeechBubbleTime.classList.add("messages-timestamp")
 
             newSpeechBubbleContainer.classList.add('general-speech-container');
             newSpeechBubble.classList.add('speech', `speech-${message.user === userNameInput.value ? 'human' : 'ai'}`);
@@ -91,10 +102,37 @@ function listenForNewMessages() {
 
             newSpeechBubbleName.textContent = message.user;
             newSpeechBubble.textContent = message.content;
+            newSpeechBubbleTime.textContent = message.timestamp;
 
             newSpeechBubbleContainer.appendChild(newSpeechBubbleName);
             newSpeechBubbleContainer.appendChild(newSpeechBubble);
             newSpeechBubbleContainer.appendChild(replyIcon);
+            newSpeechBubbleContainer.appendChild(deleteMessage);
+            newSpeechBubbleContainer.appendChild(newSpeechBubbleTime);
+
+            // Display replies
+            if (message.replies) {
+                const repliesContainer = document.createElement('div');
+                repliesContainer.classList.add('replies-container');
+                Object.values(message.replies).forEach(reply => {
+                    const replyBubbleContainer = document.createElement('div');
+                    const replyBubbleName = document.createElement('span');
+                    const replyBubble = document.createElement('div');
+
+                    replyBubbleContainer.classList.add('reply-container');
+                    replyBubble.classList.add('reply');
+
+                    replyBubbleName.textContent = reply.user;
+                    replyBubble.textContent = reply.content;
+
+                    replyBubbleContainer.appendChild(replyBubbleName);
+                    replyBubbleContainer.appendChild(replyBubble);
+
+                    repliesContainer.appendChild(replyBubbleContainer);
+                });
+                newSpeechBubbleContainer.appendChild(repliesContainer);
+            }
+
             chatbotConversation.appendChild(newSpeechBubbleContainer);
         }
 
@@ -103,6 +141,35 @@ function listenForNewMessages() {
 }
 
 listenForNewMessages();
+
+// Show reply input field
+function showReplyInput(messageId) {
+    const replyInputContainer = document.createElement('div');
+    const replyInput = document.createElement('input');
+    const replyButton = document.createElement('button');
+
+    replyButton.textContent = 'Reply';
+    replyButton.addEventListener('click', () => {
+        addReply(messageId, replyInput.value);
+    });
+
+    replyInputContainer.appendChild(replyInput);
+    replyInputContainer.appendChild(replyButton);
+
+    const messageElement = document.querySelector(`[data-id="${messageId}"]`);
+    messageElement.appendChild(replyInputContainer);
+}
+
+// Function to add a reply
+function addReply(messageId, replyContent) {
+    const reply = {
+        user: userNameInput.value,
+        content: replyContent,
+        timestamp: Date.now()
+    };
+    const messageRef = ref(database, `messages/${messageId}/replies`);
+    push(messageRef, reply);
+}
 
 // Image upload function
 function uploadImage() {
@@ -119,7 +186,7 @@ function uploadImage() {
             const userName = userNameInput.value;
             const imageMessage = {
                 user: userName,
-                blockId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
+                messageId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
                 url: downloadURL,
                 type: 'image'
             };
@@ -144,7 +211,7 @@ fileInput.addEventListener('change', () => {
         const reader = new FileReader();
         reader.onload = function(e) {
             imagePreview.src = e.target.result;
-            imagePreviewContainer.style.display = 'block';
+            imagePreviewContainer.style.display = 'message';
         };
         reader.readAsDataURL(file);
     }
