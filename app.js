@@ -98,8 +98,8 @@ function listenForNewMessages() {
             newSpeechBubbleTime.textContent = message.timestamp;
 
             newSpeechBubbleContainer.appendChild(newSpeechBubbleName);
-            newSpeechBubbleContainer.appendChild(newSpeechBubble);
             newSpeechBubbleContainer.appendChild(replyIcon);
+            newSpeechBubbleContainer.appendChild(newSpeechBubble);
             newSpeechBubbleContainer.appendChild(newSpeechBubbleTime);
             chatbotConversation.appendChild(newSpeechBubbleContainer);
         }
@@ -158,25 +158,47 @@ fileInput.addEventListener('change', () => {
 
 
 // reply preview function
-const replyButton = document.querySelector(".reply-icon")
-const replySendButton = document.querySelector(".submit-btn")
+// Attach event delegation to the parent element
+const replySendButtonSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHiSURBVHgBxZVPUsIwFMa/FGYAVxyhnkBcwbgRb6AbFTdyBDwB4QTiCcQFOONKb4AbB91YTyA3sCtFR4gvSdM/ChbGdHwzLS+kfb98ee+lANnWFa/ULrmLjI0piMCzHqFH986owcfIwBxnhnI4EmhKMC3gPAulTN6qff7CWAwazfZgUamjYjrwArJPPxfhrGWlGjbDk46NcrGEFlHXs4AqGAUfmj9eP1CX2zY64k3bUAUrvEew3BR149uGMuPUBlyWvytVEmRn3sNBm3Byj79F6WGJQnJi/q16T6Cy6OG/Kg2VVQe8RYNTtYI8Nu/2uYcUW1VpqCwnoryJzyhvv9mqSln8ZdPcQsCn3vPTcaw3arQ7ZrRIqXDQvT/kJ/GcSZljFUKeJgJu2iWE2J2rVKCTWNKMepcsn1gB08VBcj3yU3PmCNzEx7W+2tI2ZFWbmLRLDtPwfGwL6vIIkTbNofNwwK+xpC2C0KLPSmvoDve4n4DRZMUkMM/0dtqCGAthlK9tKUwexmllvyrkB4xAupmZbm6bkAQsKFk3oA5tQxIweUQJEyRWhbYgCRipqZv2Lhbh2YYkYNThGzJpsjgmb3gkx7UJScCUMugvNfRlFRLC4s2cFSSEFSfwJgWMCVLOCvIv9gV96TMYnLAEUwAAAABJRU5ErkJggg==";
+const replyCancelButtonSrc = "/cancel-svgrepo-com.svg"
 
-replyButton.addEventListener("click", function() {
-    const replyPreview = document.createElement("div")
-    const replyPreviewName = document.createElement("span")
-    const replyPreviewContent = document.createElement("span")
+chatbotConversation.addEventListener("click", function(e) {
+    if (e.target.classList.contains("reply-icon")) {
+        const replyPreview = document.createElement("div");
+        const replyPreviewName = document.createElement("span");
+        const replyPreviewContent = document.createElement("span");
+        const replyInputForm = document.createElement("div");
+        const replyInput = document.createElement("input");
+        const replySendButton = document.createElement("img");
+        const replyCancelButton = document.createElement("img");
+        const formContainer = document.querySelector(".form-section");
+        const replyIcon = e.target
+        
+        replyPreviewName.textContent = replyIcon.previousSibling.innerText
+        replyPreviewContent.textContent = replyIcon.nextSibling.innerText
 
-    replyPreview.appendChild(replyPreviewName)
-    replyPreview.appendChild(replyPreviewContent)
-    chatbotConversation.appendChild(replyPreview)
+        replyPreview.appendChild(replyCancelButton);
+        replyPreview.appendChild(replyPreviewName);
+        replyPreview.appendChild(replyPreviewContent);
+        replyInputForm.appendChild(replyInput)
+        replyInputForm.appendChild(replySendButton)
+        replyPreview.appendChild(replyInputForm);
+        formContainer.appendChild(replyPreview);
 
-    replyPreview.classList.add("reply-preview-container")
-    replySendButton.classList.add("reply-sender")
-})
+        replyPreview.classList.add("reply-preview-container");
+        replyInputForm.classList.add("reply-input-form");
+        replySendButton.setAttribute("src", replySendButtonSrc)
+        replyCancelButton.setAttribute("src", replyCancelButtonSrc)
 
+        replyCancelButton.addEventListener("click", () => {
+            replyPreview.remove()
+        })
+        
+    }
+});
 replySendButton.addEventListener("click", function() {
     this.classList.remove("reply-sender")
-})
+});
 
 
 
