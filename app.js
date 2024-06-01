@@ -160,7 +160,7 @@ fileInput.addEventListener('change', () => {
 // reply preview function
 // Attach event delegation to the parent element
 const replySendButtonSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHiSURBVHgBxZVPUsIwFMa/FGYAVxyhnkBcwbgRb6AbFTdyBDwB4QTiCcQFOONKb4AbB91YTyA3sCtFR4gvSdM/ChbGdHwzLS+kfb98ee+lANnWFa/ULrmLjI0piMCzHqFH986owcfIwBxnhnI4EmhKMC3gPAulTN6qff7CWAwazfZgUamjYjrwArJPPxfhrGWlGjbDk46NcrGEFlHXs4AqGAUfmj9eP1CX2zY64k3bUAUrvEew3BR149uGMuPUBlyWvytVEmRn3sNBm3Byj79F6WGJQnJi/q16T6Cy6OG/Kg2VVQe8RYNTtYI8Nu/2uYcUW1VpqCwnoryJzyhvv9mqSln8ZdPcQsCn3vPTcaw3arQ7ZrRIqXDQvT/kJ/GcSZljFUKeJgJu2iWE2J2rVKCTWNKMepcsn1gB08VBcj3yU3PmCNzEx7W+2tI2ZFWbmLRLDtPwfGwL6vIIkTbNofNwwK+xpC2C0KLPSmvoDve4n4DRZMUkMM/0dtqCGAthlK9tKUwexmllvyrkB4xAupmZbm6bkAQsKFk3oA5tQxIweUQJEyRWhbYgCRipqZv2Lhbh2YYkYNThGzJpsjgmb3gkx7UJScCUMugvNfRlFRLC4s2cFSSEFSfwJgWMCVLOCvIv9gV96TMYnLAEUwAAAABJRU5ErkJggg==";
-const replyCancelButtonSrc = "/cancel-svgrepo-com.svg"
+const replyCancelButtonSrc = "https://firebasestorage.googleapis.com/v0/b/chatbot-911ad.appspot.com/o/cancel-svgrepo-com.svg?alt=media&token=70a126da-38e8-47c7-8dcb-f9ace98c6f25"
 
 chatbotConversation.addEventListener("click", function(e) {
     if (e.target.classList.contains("reply-icon")) {
@@ -189,6 +189,7 @@ chatbotConversation.addEventListener("click", function(e) {
         replyInputForm.classList.add("reply-input-form");
         replySendButton.setAttribute("src", replySendButtonSrc)
         replyCancelButton.setAttribute("src", replyCancelButtonSrc)
+        replyCancelButton.setAttribute("alt", "Cancel")
 
         replyCancelButton.addEventListener("click", () => {
             replyPreview.remove()
