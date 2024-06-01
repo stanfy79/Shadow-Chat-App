@@ -27,7 +27,7 @@ const acceptButton = document.querySelector(".accept-button");
 const fileInput = document.getElementById('file-upload');
 
 acceptButton.addEventListener('click', () => {
-    const userName = userNameInput.value;
+    const userName = "@" + userNameInput.value;
     promptBox.style.display = "none";
     push(conversationInDb, {
         user: userName,
@@ -55,7 +55,8 @@ function listenForNewMessages() {
     onChildAdded(conversationInDb, (snapshot) => {
         const message = snapshot.val();
         const replyIcon = document.createElement("img");
-        replyIcon.setAttribute("src", "reply-all-svgrepo-com.svg")
+        replyIcon.setAttribute("src", "https://firebasestorage.googleapis.com/v0/b/chatbot-911ad.appspot.com/o/reply-all-svgrepo-com.svg?alt=media&token=d1fd5bc9-2bc1-4ecf-8700-454a6933f267")
+        replyIcon.setAttribute("alt", "reply")
         replyIcon.classList.add("reply-icon")
 
         if (message.type === 'join') {
@@ -74,12 +75,12 @@ function listenForNewMessages() {
             newImageName.classList.add('userName', `speech-by-${message.user === userNameInput.value ? 'user' : 'other'}`);
             newImageSent.classList.add("new-image-sent");
 
-            newImageName.textContent = message.user;
+            newImageName.textContent = "@" + message.user;
             newImageSent.src = message.url;
 
             newImageContainer.appendChild(newImageName);
-            newImageContainer.appendChild(newImageSent);
             newImageContainer.appendChild(replyIcon)
+            newImageContainer.appendChild(newImageSent);
             chatbotConversation.appendChild(newImageContainer);
         } else {
             const newSpeechBubbleContainer = document.createElement('div');
@@ -93,7 +94,7 @@ function listenForNewMessages() {
             newSpeechBubble.classList.add('speech', `speech-${message.user === userNameInput.value ? 'human' : 'ai'}`);
             newSpeechBubbleName.classList.add('userName', `speech-by-${message.user === userNameInput.value ? 'user' : 'other'}`);
 
-            newSpeechBubbleName.textContent = message.user;
+            newSpeechBubbleName.textContent = "@" + message.user;
             newSpeechBubble.textContent = message.content;
             newSpeechBubbleTime.textContent = message.timestamp;
 
@@ -157,16 +158,17 @@ fileInput.addEventListener('change', () => {
 });
 
 
-// reply preview function
-// Attach event delegation to the parent element
 const replySendButtonSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHiSURBVHgBxZVPUsIwFMa/FGYAVxyhnkBcwbgRb6AbFTdyBDwB4QTiCcQFOONKb4AbB91YTyA3sCtFR4gvSdM/ChbGdHwzLS+kfb98ee+lANnWFa/ULrmLjI0piMCzHqFH986owcfIwBxnhnI4EmhKMC3gPAulTN6qff7CWAwazfZgUamjYjrwArJPPxfhrGWlGjbDk46NcrGEFlHXs4AqGAUfmj9eP1CX2zY64k3bUAUrvEew3BR149uGMuPUBlyWvytVEmRn3sNBm3Byj79F6WGJQnJi/q16T6Cy6OG/Kg2VVQe8RYNTtYI8Nu/2uYcUW1VpqCwnoryJzyhvv9mqSln8ZdPcQsCn3vPTcaw3arQ7ZrRIqXDQvT/kJ/GcSZljFUKeJgJu2iWE2J2rVKCTWNKMepcsn1gB08VBcj3yU3PmCNzEx7W+2tI2ZFWbmLRLDtPwfGwL6vIIkTbNofNwwK+xpC2C0KLPSmvoDve4n4DRZMUkMM/0dtqCGAthlK9tKUwexmllvyrkB4xAupmZbm6bkAQsKFk3oA5tQxIweUQJEyRWhbYgCRipqZv2Lhbh2YYkYNThGzJpsjgmb3gkx7UJScCUMugvNfRlFRLC4s2cFSSEFSfwJgWMCVLOCvIv9gV96TMYnLAEUwAAAABJRU5ErkJggg==";
 const replyCancelButtonSrc = "https://firebasestorage.googleapis.com/v0/b/chatbot-911ad.appspot.com/o/cancel-svgrepo-com.svg?alt=media&token=70a126da-38e8-47c7-8dcb-f9ace98c6f25"
+
+// reply preview function
 
 chatbotConversation.addEventListener("click", function(e) {
     if (e.target.classList.contains("reply-icon")) {
         const replyPreview = document.createElement("div");
         const replyPreviewName = document.createElement("span");
         const replyPreviewContent = document.createElement("span");
+        const replyedMessageAdded = document.createElement("span");
         const replyInputForm = document.createElement("div");
         const replyInput = document.createElement("input");
         const replySendButton = document.createElement("img");
@@ -174,8 +176,9 @@ chatbotConversation.addEventListener("click", function(e) {
         const formContainer = document.querySelector(".form-section");
         const replyIcon = e.target
         
-        replyPreviewName.textContent = replyIcon.previousSibling.innerText
-        replyPreviewContent.textContent = replyIcon.nextSibling.innerText
+        
+        replyPreviewName.textContent = "replying_ " + replyIcon.previousSibling.innerText
+        replyPreviewContent.textContent = "~ " + replyIcon.nextSibling.innerText
 
         replyPreview.appendChild(replyCancelButton);
         replyPreview.appendChild(replyPreviewName);
@@ -194,11 +197,19 @@ chatbotConversation.addEventListener("click", function(e) {
         replyCancelButton.addEventListener("click", () => {
             replyPreview.remove()
         })
-        
+        replySendButton.addEventListener("click", function() {
+            const originalMessage = replyIcon.parentElement
+            const replyedMessage = originalMessage.cloneNode(true)
+            
+            replyedMessageAdded.textContent = `@${userNameInput.value}~ ` + replyInput.value
+            replyedMessageAdded.classList.add("replyedMessageAdded")
+            replyedMessage.classList.add("replyed-cloned-version")
+            replyedMessage.appendChild(replyedMessageAdded)
+            chatbotConversation.appendChild(replyedMessage)
+
+            replyPreview.remove()
+        });
     }
-});
-replySendButton.addEventListener("click", function() {
-    this.classList.remove("reply-sender")
 });
 
 
