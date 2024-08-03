@@ -392,19 +392,21 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     color: white;
     .form-area {
         width: 100%;
         max-width: 1000px;
         top: 10px;
         height: 100%;
-        position: relative;
+        position: absolute;
         display: flex;
         justify-content: center;
         flex-flow: column nowrap;
         .image-file-label {
             width: 40px;
             height: 40px;
+            position: absolute;
             cursor: pointer;
             padding: 10px 0 0 10px;
         }
@@ -421,8 +423,9 @@ html, body {
         }
         
         input[type="text"] {
-            width: 78%;
+            width: 80%;
             height: 100%;
+            margin-left: 10%;
             word-break: wrap;
             word-wrap: break-word;
             font-size: 95%;
