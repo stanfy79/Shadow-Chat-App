@@ -177,8 +177,8 @@ chatbotConversation.addEventListener("click", function(e) {
         const replyIcon = e.target
         
         
-        replyPreviewName.textContent = "replying_ " + replyIcon.previousSibling.innerText
-        replyPreviewContent.textContent = "~ " + replyIcon.nextSibling.innerText
+        replyPreviewName.textContent = "replying " + replyIcon.previousSibling.innerText
+        replyPreviewContent.textContent = replyIcon.nextSibling.innerText
 
         replyPreview.appendChild(replyCancelButton);
         replyPreview.appendChild(replyPreviewName);
@@ -206,6 +206,13 @@ chatbotConversation.addEventListener("click", function(e) {
             replyedMessage.classList.add("replyed-cloned-version")
             replyedMessage.appendChild(replyedMessageAdded)
             chatbotConversation.appendChild(replyedMessage)
+
+            const replyMessageContainer = {
+                userName: userNameInput.value,
+                blockId: Date.now().toString(36) + Math.random().toString(36).substr(2, 9),
+                originalMessageUserName: replyPreviewName,
+                originalUserMessage: replyInput.value,
+            }         
 
             replyPreview.remove()
         });

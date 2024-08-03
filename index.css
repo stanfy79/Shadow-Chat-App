@@ -297,8 +297,7 @@ html, body {
     max-width: 900px;
     margin: 0 auto;
     padding: 5px;
-    backdrop-filter: blur(10px);
-    background: #14141432;
+    backdrop-filter: blur(15px);
     display: flex;
     position: fixed;
     bottom: 0%;
@@ -311,7 +310,7 @@ html, body {
         top: -15px;
     }
     span {
-        color: #848484;
+        color: #cacaca;
         width: 100%;
         font-family: system-ui;
         padding: 0 5px;
@@ -322,6 +321,10 @@ html, body {
     span:first-of-type {
         font-weight: bolder;
         color: #8d8d8d;
+    }
+    span:last-of-type {
+        font-size: 14px;
+        margin-left: 20px;
     }
     .reply-input-form {
         display: flex;
@@ -335,14 +338,18 @@ html, body {
             color: white;
             width: 80%;
             padding: 1em;
-            background: #000000a2;
+            transition: border-color .5s ease;
+            background: transparent;
+            border: 1px solid #7b7b7b;
             border-radius: 10px;
             margin-top: 10px;
             font-size: 100%;
             font-weight: 500;
             font-family: system-ui;
             outline: none;
-            border: none;
+            &:focus {
+                border-color: #b6b6b6;
+            }
         }
         img {
             padding-left: 20px;
